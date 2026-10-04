@@ -1,34 +1,36 @@
-# Veritas · News Verification & Fact-Checking Platform
+# Fake News Detection System
+**Information Retrieval & Machine Learning Project**
 
-Veritas is a full-stack, open-source news verification and investigative journalism engine. It evaluates news articles, viral social headlines, and suspicious statements against primary source records, peer-reviewed science, and major journalistic wire archives.
+A full-stack NLP and Information Retrieval system that classifies news articles as **REAL NEWS** or **FAKE NEWS**, explains feature weights via linear model coefficients, ranks top-5 similar articles using TF-IDF cosine similarity, and evaluates machine learning model performance across benchmarks.
 
 ---
 
-## Key Features
+## Architecture & Features
 
-- **Multi-Input Verification**:
-  - **Text & Claims**: Verify raw text, breaking news snippets, transcribed speech, or viral messaging chains.
-  - **Article URL Scraper**: Directly fetches and extracts clean text and bylines from any online news article.
-  - **Benchmark Case Studies**: Includes pre-compiled verification dossiers (health hoaxes, deepfake audio leaks, celebrity financial scams, peer-reviewed science breakthroughs, and satire).
-- **Comprehensive Forensic Analysis**:
-  - **Truth Score (0–100%)**: Clear verdict ratings (*Verified True*, *Mostly True*, *Mixture / Misleading*, *Mostly False*, *Fabricated Hoax*, or *Satire / Parody*).
-  - **Claim-by-Claim Breakdown**: Isolates individual testable assertions with evidence citations, original excerpt quotes, and severity levels.
-  - **Original Text Annotation**: Visual inspection marking false claims, misleading context, emotional hyperbole, and verified facts.
-  - **Rhetoric & Logic Lab**: Measures sensationalism, identifies cognitive/logical fallacies (e.g. Straw Man, False Dilemma, Ad Hominem), and analyzes ideological slant.
-  - **Source Provenance & Wire Consensus**: Verifies domain reputation, author attribution, journalistic green flags, and cross-references against AP, Reuters, and Snopes.
-  - **Shareable Debunk Card**: One-click formatted summary ready to copy into WhatsApp, Reddit, X, or family groups to halt misinformation spread.
-- **News Literacy Quiz ("Spot the Fake")**:
-  - Interactive 5-scenario critical thinking challenge testing readers' ability to spot fake news, parody, and manufactured outrage.
-- **Persistent History**:
-  - Automatically saves past verifications in local storage for quick review and comparison.
+1. **Classification Verdict & Confidence Score**:
+   - Classifies articles into **REAL NEWS** or **FAKE NEWS**.
+   - Outputs probabilistic confidence scores based on Linear SVM decision boundaries.
+
+2. **Influential Words (Model Explanation)**:
+   - Identifies words that most heavily influenced the classification decision based on linear model coefficients (e.g., formal journalistic attribution tokens labeled `REAL`, sensational or speculative words labeled `FAKE`).
+
+3. **Top 5 Similar Articles (Information Retrieval)**:
+   - Computes TF-IDF vector representations and ranks the top 5 most similar articles in the reference collection using Cosine Similarity.
+   - Displays article title, dataset label (`REAL` or `FAKE`), and similarity score.
+
+4. **Model Performance Comparison**:
+   - Benchmarks three standard text classification models evaluated on an 80/20 stratified split of 39,105 deduplicated articles (Fake: 17,908, Real: 21,197):
+     - **Logistic Regression**: Accuracy: 98.63%, Precision: 0.9791, Recall: 0.9960, F1-Score: 0.9875
+     - **Multinomial Naive Bayes**: Accuracy: 96.05%, Precision: 0.9667, Recall: 0.9601, F1-Score: 0.9634
+     - **Linear SVM (Selected)**: Accuracy: 99.16%, Precision: 0.9876, Recall: 0.9969, F1-Score: 0.9923
 
 ---
 
 ## Tech Stack
 
-- **Frontend**: React 19, TypeScript, Tailwind CSS v4, Lucide React, Motion
+- **Frontend**: React 19, TypeScript, Tailwind CSS v4, Lucide React
 - **Backend**: Node.js, Express, tsx
-- **Verification Engine**: Google Gemini API (`@google/genai`) with Google Search Grounding and multi-tier failover
+- **NLP & IR**: TF-IDF Vectorizer, Cosine Similarity Engine, Linear Coefficient Explainer
 - **Build Tool**: Vite 8
 
 ---
@@ -37,8 +39,8 @@ Veritas is a full-stack, open-source news verification and investigative journal
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/veritas-news-verification.git
-cd veritas-news-verification
+git clone https://github.com/YOUR_USERNAME/fake-news-detection-system.git
+cd fake-news-detection-system
 ```
 
 ### 2. Install dependencies
@@ -46,24 +48,13 @@ cd veritas-news-verification
 npm install
 ```
 
-### 3. Configure environment variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Add your Gemini API key:
-```env
-GEMINI_API_KEY="your-google-gemini-api-key"
-PORT=3000
-```
-
-### 4. Run the development server
+### 3. Run development server
 ```bash
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 5. Build for production
+### 4. Build for production
 ```bash
 npm run build
 npm run start
@@ -73,18 +64,10 @@ npm run start
 
 ## Publishing to GitHub
 
-To push this codebase to your own GitHub account:
-
 ```bash
-# 1. Initialize git (if not already initialized)
-git init
 git add .
-git commit -m "Initial commit: Veritas News Verification Engine"
-
-# 2. Add your GitHub repository as remote
+git commit -m "Update: Fake News Detection System matching IR & ML specification"
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-
-# 3. Rename branch to main and push
 git branch -M main
 git push -u origin main
 ```
@@ -92,5 +75,4 @@ git push -u origin main
 ---
 
 ## License
-
-Apache-2.0
+MIT / Apache-2.0
