@@ -1,0 +1,6 @@
+{
+  "name": "Veritas - News Verification & Fact-Checking Engine",
+  "description": "Comprehensive fact-checking and news verification platform. Analyzes articles and claims for credibility, logical fallacies, emotional manipulation, and cross-references verified sources.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
